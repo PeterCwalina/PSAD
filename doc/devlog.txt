@@ -21,7 +21,7 @@ Unknown objective.
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 
-HasanA -- 2019-1-4 19:09
+hasanA -- 2019-1-4 19:09
 --------------------------------------------------------------
 Created devlog.txt file.
 ==============================================================
@@ -30,4 +30,10 @@ cwalinaP -- 2019-1-9 18:20
 Updated design doc to be more in depth along with a decision to 
 use bootstrap as the front end framework.  Some of the diagrams 
 still need to be updated. You know who you are.
+==============================================================
+hasanA -- 2019-1-9 07:20 19:24 
+--------------------------------------------------------------
+Made folder to hold our project. Added CSS file and early JS file.
+Added requirements.txt and updated .gitignore file to ignore 
+VSCode folder.
 ==============================================================
