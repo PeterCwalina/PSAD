@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form class="auth-form" action="/signup" method="POST">
+        <h3>Signup</h3>
+        {% set msgs = get_flashed_messages() %}
+        {% for each in msgs %}
+        <p class="error">{{each}}</p>
+        {% endfor %}
+        <input name = "username" type = "text" placeholder="Username" required/>
+        <input name = "password" type = "password" placeholder="Password" required/>
+        <input name = "confirm" type = "password" placeholder="Confirm Password" required/>
+        <input type = "submit" name = "signup" value = "Sign Up" />
+    </form>
+
+
+    <style>
+        .auth-form {
+            margin: 50px auto;
+            width: 50%;
+            background-color: #fff;
+            padding: 20px
+        }
+
+        .auth-form input[type="text"], .auth-form input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px auto 10px auto;
+            border-width: 0 0 1px 0
+        }
+
+        .auth-form input:focus {
+            outline: none;
+            border-color: #ccc
+        }
+
+        .auth-form input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px auto 10px auto;
+            background-color: #00008B;
+            border: 1px solid #00008B;
+            color: #fff;
+            -webkit-transition: all .35s;
+            -moz-transition: all .35s;
+            transition: all .35s;
+        }
+
+        .auth-form input[type="submit"]:hover {
+            background-color: #fff;
+            color: #00008B;
+        }
+
+        .error {
+            color: #00008B;
+        }
+    </style>
+
+{% endblock %}
