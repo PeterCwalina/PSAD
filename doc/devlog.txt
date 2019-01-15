@@ -37,3 +37,12 @@ Made folder to hold our project. Added CSS file and early JS file.
 Added requirements.txt and updated .gitignore file to ignore 
 VSCode folder.
 ==============================================================
+cwalinaP -- 2019-1-13 21:42 
+--------------------------------------------------------------
+Created the wikipedia get to the bald eagle minigame and created the readme updated the design doc comes next
+==============================================================
+cwalinaP -- 2019-1-14 17:45 
+--------------------------------------------------------------
+Added html for login and signup pages
+==============================================================
+

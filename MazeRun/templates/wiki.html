@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}
+Find the Bald eagle
+{% endblock %}
+{% block content %}
+<body>
+    <h1>Find the Bald Eagle</h1>
+    <h2>Redirects Remaining:{{tries}}</h2>
+    <p>
+      {% for key in dict %}
+      <li>
+        <a href="/wiki/{{key}}/{{tries}}">{{dict[key]['title']}}</a>
+      </li>
+      {% endfor %}
+
+    </p>
+</body>
+{% endblock %}
