@@ -27,22 +27,26 @@ Created devlog.txt file.
 ==============================================================
 cwalinaP -- 2019-1-9 18:20
 --------------------------------------------------------------
-Updated design doc to be more in depth along with a decision to 
-use bootstrap as the front end framework.  Some of the diagrams 
+Updated design doc to be more in depth along with a decision to
+use bootstrap as the front end framework.  Some of the diagrams
 still need to be updated. You know who you are.
 ==============================================================
-hasanA -- 2019-1-9 07:20 19:24 
+hasanA -- 2019-1-9 07:20 19:24
 --------------------------------------------------------------
 Made folder to hold our project. Added CSS file and early JS file.
-Added requirements.txt and updated .gitignore file to ignore 
+Added requirements.txt and updated .gitignore file to ignore
 VSCode folder.
 ==============================================================
-cwalinaP -- 2019-1-13 21:42 
+cwalinaP -- 2019-1-13 21:42
 --------------------------------------------------------------
 Created the wikipedia get to the bald eagle minigame and created the readme updated the design doc comes next
 ==============================================================
-cwalinaP -- 2019-1-14 17:45 
+cwalinaP -- 2019-1-14 17:45
 --------------------------------------------------------------
 Added html for login and signup pages
 ==============================================================
-
+cwalinaP -- 2019-1-15 22:11
+--------------------------------------------------------------
+Updated that wiki link minigame to work better and look nicer
+also fixed something in the navbar
+==============================================================

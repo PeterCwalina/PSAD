@@ -3,16 +3,21 @@
 Find the Bald eagle
 {% endblock %}
 {% block content %}
-<body>
+<body style="text-align:center">
     <h1>Find the Bald Eagle</h1>
     <h2>Redirects Remaining:{{tries}}</h2>
-    <p>
+    {% set msgs = get_flashed_messages() %}
+    {% for each in msgs %}
+    <p class="error">{{each}}</p>
+    {% endfor %}
+    <div class='row'>
       {% for key in dict %}
-      <li>
-        <a href="/wiki/{{key}}/{{tries}}">{{dict[key]['title']}}</a>
-      </li>
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="padding:10px;">
+        <li>
+          <a href="/wiki/{{key}}/{{tries}}">{{dict[key]['title']}}</a>
+        </li>
+      </div>
       {% endfor %}
-
-    </p>
+    </div>
 </body>
 {% endblock %}
