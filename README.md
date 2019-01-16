@@ -27,7 +27,7 @@ $ python3 -m venv tm
 $ . tm/bin/activate
 ```
 
-3. In your activated virtual environment, run the following commmands to install the Dependencies
+3. In your activated virtual environment, run the following commands to install the Dependencies
 
 ```
 (tm) $ pip3 install -r requirements.txt
