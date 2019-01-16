@@ -1,3 +1,5 @@
+'use strict';
+
 var rand = (n) => Math.floor(Math.random() * n);
 
 var choice = (s) => Array.from(s)[rand(s.size)];
@@ -5,7 +7,7 @@ var choice = (s) => Array.from(s)[rand(s.size)];
 var point_equal = (p1, p2) => p1[0] === p2[0] && p1[1] === p2[1];
 
 var contains = (s, e) => {
-    for (i of s) {
+    for (var i of s) {
         if (point_equal(i, e)) {
             return true;
         }
@@ -33,6 +35,9 @@ var get_walls = (x, y) => {
     return walls;
 };
 
+var dead_end = (maze, [x, y]) => contains(maze, [x, y]) &&
+    (!contains(maze, [x, y+1]) || !contains(maze, [x, y-1]));
+
 var gen_maze = () => {
     var grid = new Set();
     for (let i = 0; i < MAX_X; i++) {
@@ -40,10 +45,10 @@ var gen_maze = () => {
             grid.add([i, j]);
         }
     }
+    let start = [0, rand(MAX_Y)];
+    var cell = start;
     var maze = new Set();
-    cell = [0, rand(MAX_Y)];
     var visited = new Set();
-    visited.add(cell);
     visited.add(cell);
     maze.add(cell);
     var walls = get_walls(...cell);
@@ -56,7 +61,7 @@ var gen_maze = () => {
         // console.log("surrounding", surrounding);
         var num_visited = 0;
         // console.log('visited', visited);
-        for (c of surrounding) {
+        for (var c of surrounding) {
             // console.log('check', visited, c, contains(visited, c));
             if (contains(visited, c)) {
                 num_visited += 1;
@@ -75,18 +80,34 @@ var gen_maze = () => {
     // Testing
     // console.log(maze);
     var result = "";
-    for (var x = 0; x < MAX_X; x++) {
-        for (var y = 0; y < MAX_Y; y++) {
+    for (var y = 0; y < MAX_Y; y++) {
+        for (var x = 0; x < MAX_X; x++) {
             if (contains(maze, [x, y])) {
-                result += '+';
+                result += '-';
             } else {
-                result += ' ';
+                result += '#';
             }
         }
         result += '\n';
     }
     console.log(result);
+    let end_x = MAX_X - 1;
+    var end_y;
+    let offset = rand(MAX_Y);
+    for (var y = 0; y < MAX_Y; y++) {
+        if (dead_end(maze, [end_x, (y+offset) % MAX_Y])) {
+            end_y = y;
+            break;
+        }
+    }
+    return {
+        maze: maze,
+        start: start,
+        end: [end_x, end_y],
+    };
 };
 
-gen_maze();
+let m = gen_maze();
+console.log(m.start);
+console.log(m.end);
 
