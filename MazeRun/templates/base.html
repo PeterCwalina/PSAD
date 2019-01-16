@@ -5,23 +5,26 @@
 		<title>{% block title %} {% endblock %}</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+		<style type="text/css">
+	            #links{
+	                color: white;
+	            }
+							#right{
+								float:right;
+								padding-left: 15px;
+							}
+							.container{
+								margin-top: 55px;
+								margin-left: 10px;
+							}
+	        </style>
 	</head>
 	<body>
-		<nav class="navbar navbar-light navbar-expand-md" style="background-color: white">
-			<a style = "color: #00008B; font-weight: 300;" class="navbar-brand" href="/">MazeRun</a>
-			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-						<ul class="navbar-nav ml-auto">
-							<li class="nav-item">
-								<a style = "color: #00008B; font-weight: 300; padding-left: 15px;" class="nav-link" href="/login">Login</a>
-							</li>
-							<li class="nav-item">
-								<a style = "color: #00008B; font-weight: 300; padding-left: 15px;" class="nav-link" href="/logout">Logout</a>
-							</li>
-							<li class="nav-item">
-							 <a style = "color: #00008B; font-weight: 300; padding-left: 15px;" class="nav-link" href="/signup">Register</a>
-						  </li>
-						</ul>
-				</div>
+		<nav class="navbar fixed-top navbar-dark bg-dark">
+			<a class="navbar-brand" href="/" id="links">MazeRun</a>
+			<a  class="nav-link" href="login.html" id="links" id= "right">Login</a>
+			<a  class="nav-link" href="logout.html" id="links" id= "right">Logout</a>
+			<a  class="nav-link" href="signup.html" id="links" id = "right">Register</a>
 		</nav>
 		<div class = "container">
 			{% block content %} {% endblock %}

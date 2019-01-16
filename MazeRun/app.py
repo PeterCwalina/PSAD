@@ -42,6 +42,9 @@ def StartWiki():
     page = random.randint(10000,20000)
     return redirect('/wiki/' + str(page) + '/10')
 
+@app.route('/tests')
+def none():
+    return render_template('tests.html')
 
 
 
