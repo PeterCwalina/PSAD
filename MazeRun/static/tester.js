@@ -5,7 +5,6 @@ const PATH = "-"
 const PLAYER = "P"
 const START = "S"
 const END = "E"
-const TEST = "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwi2lq_9j_DfAhXqct8KHeS3A9MQjRx6BAgBEAU&url=%2Furl%3Fsa%3Di%26rct%3Dj%26q%3D%26esrc%3Ds%26source%3Dimages%26cd%3D%26ved%3D%26url%3Dhttps%253A%252F%252Funsplash.com%252Fsearch%252Fphotos%252Fbrick-wall%26psig%3DAOvVaw2yxfkPVBlRHIPieLJ563CD%26ust%3D1547653301702374&psig=AOvVaw2yxfkPVBlRHIPieLJ563CD&ust=1547653301702374"
 
 var game = [
     [WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL],
@@ -26,7 +25,44 @@ array.push(PLAYER)
 array.push(START)
 array.push(END)
 array.push(PATH)
+console.log(gen_maze())
 
+var gen = function() {
+    var col = []
+    var g = gen_maze()
+    var tmp = []
+    for (i = 0; i < g.length; i++) {
+        if (g.charAt(i) == WALL) {
+            tmp.push(WALL)
+            continue
+        }
+        if (g.charAt(i) == PATH) {
+            tmp.push(PATH)
+            continue
+        }
+        if (g.charAt(i) == '\n') {
+            col.push(tmp)
+            tmp = []
+        }
+    }
+    col[col.length - 1][col[col.length - 1].indexOf(PATH)] = PLAYER
+    tmp = col[0]
+    let index = tmp.reverse().indexOf(PATH) // will be used for END
+    tmp = []
+    for (i = 0; i < col.length; i++) {
+        tmp.push(WALL)
+    }
+    col.push(tmp)
+    col.unshift(tmp)
+    let t = col.length
+    for (i = 1; i < t; i++) {
+        col[i].push(WALL)
+        console.log(col)
+        col[i].unshift(WALL)
+    }
+    return col
+}
+game = gen()
 var print_maze = function prin() { // color: #6290C3
     var id = 'test'
     for (i = 0; i < game.length; i++) {
@@ -136,9 +172,7 @@ function checkKey(e) {
     }
     if (e.keyCode == '37') { // up arrow
         var wait = game[player_location[0]][player_location[1] - 1]
-        if (wait == WALL) {
-            return
-        }
+        if (wait == WALL) { return }
         game[player_location[0]][player_location[1] - 1] = PLAYER
         game[player_location[0]][player_location[1]] = wait
         var breaks = document.getElementsByTagName('br')
@@ -202,6 +236,15 @@ function checkKey(e) {
 var g = document.getElementById('g')
 g.addEventListener('click', function() {
     // print()
+    var breaks = document.getElementsByTagName('br')
+    var col = document.getElementsByTagName('img')
+    for (i = col.length - 1; i >= 0; i--) {
+        col[i].remove()
+    }
+    for (i = breaks.length - 1; i > -1; i--) {
+        breaks[i].remove()
+    }
+    game = gen()
     p()
     //g.disabled = true
 })

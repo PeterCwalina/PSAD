@@ -78,14 +78,15 @@ var gen_maze = () => {
     for (var x = 0; x < MAX_X; x++) {
         for (var y = 0; y < MAX_Y; y++) {
             if (contains(maze, [x, y])) {
-                result += '+';
+                result += '-';
             } else {
-                result += ' ';
+                result += '#';
             }
         }
         result += '\n';
     }
     console.log(result);
+    return result;
 };
 
 gen_maze();
