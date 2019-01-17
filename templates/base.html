@@ -22,11 +22,13 @@
 	<body>
 		<nav class="navbar fixed-top navbar-dark bg-dark">
 			<a class="navbar-brand" href="/" id="links">MazeRun</a>
-			{% if logged_in %}
+			{% if not logged_in %}
 				<a  class="nav-link" href="/login" id="links" id= "right">Login</a>
 			{% endif %}
-				<a  class="nav-link" href="/logout" id="links" id= "right">Logout</a>
 			{% if logged_in %}
+				<a  class="nav-link" href="/logout" id="links" id= "right">Logout</a>
+			{% endif %}
+			{% if not logged_in %}
 				<a  class="nav-link" href="/signup" id="links" id = "right">Register</a>
 			{% endif %}
 		</nav>
