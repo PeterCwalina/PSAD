@@ -56,3 +56,8 @@ cwalinaP -- 2019-1-15 22:11
 Updated that wiki link minigame to work better and look nicer
 also fixed something in the navbar
 ==============================================================
+cwalinaP -- 2019-1-16 20:26
+--------------------------------------------------------------
+Revamped the Design doc should now be up to date with standards
+also updated the readme
+==============================================================
