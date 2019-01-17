@@ -27,6 +27,11 @@ def index():
         )
 
 
+@app.route('/maze')
+def maze():
+    return render_template('maze.html')
+
+
 #for the wikipedia find the bald eagle in 5 redirects game
 @app.route('/wiki/<id>/<tries>')
 def wiki(id,tries):
