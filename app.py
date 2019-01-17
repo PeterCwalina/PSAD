@@ -40,17 +40,20 @@ def wiki(id,tries):
 
     else:
         if (id == '4401'):#if you wind up at the id for bald eagle go back home
-            return redirect(url_for('home'))
+            return redirect(url_for('none'))
 
     Tries = int(tries) - 1
     if (Tries == 0):#if you run out of tries you lose
-        return "You Lose"
+        return redirect(url_for('StartWiki'))
     wikipedia = "https://en.wikipedia.org/w/api.php"
     query = str(wikipedia) + "?action=query&format=json&prop=info&pageids=" + str(id) + "&generator=links&gpllimit=max"
     u = urllib.request.urlopen(query)#make a request for all the links on the page of this id
     response = u.read()
     data = json.loads(response)
-    data = data['query']['pages']
+    try:
+        data = data['query']['pages']
+    except Exception as e:
+        return redirect(url_for('StartWiki'))
 
     return render_template('wiki.html',
                             dict = data,
@@ -143,6 +146,9 @@ def logout():
     util.accounts.logout_user(session)
     return redirect('/')
 
+@app.route('/test')
+def none():
+    return render_template('tests.html')
 
 if __name__ == '__main__':
     util.accounts.create_table()
