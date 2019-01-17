@@ -50,7 +50,7 @@ hasanA -- 2019-1-15 23:05
 Integrate maze generation and maze printing. Maze now can also be
 refreshed through a button. Add maze movement functionality. Add
 static images.
-=======
+==============================================================
 cwalinaP -- 2019-1-15 22:11
 --------------------------------------------------------------
 Updated that wiki link minigame to work better and look nicer
@@ -60,4 +60,9 @@ cwalinaP -- 2019-1-16 20:26
 --------------------------------------------------------------
 Revamped the Design doc should now be up to date with standards
 also updated the readme
+==============================================================
+hasanA -- 2019-1-16 20:54 
+--------------------------------------------------------------
+Add blocking functionality. Revamp movement. Add redirection 
+capability. 
 ==============================================================
