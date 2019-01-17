@@ -1,7 +1,9 @@
 # Team Phil Swift's Amazing Doors
 # SoftDev pd7
 
-from flask import Flask, request, render_template, session, redirect, flash
+import urllib, json, os, random  # Standard Library
+from flask import Flask, request, render_template, session, redirect, \
+        flash, url_for  # Flask
 import util.accounts
 import util.sessions
 import base64
@@ -9,19 +11,52 @@ import base64
 app = Flask(__name__)
 app.secret_key = util.accounts.get_salt()
 
+
 @app.route('/')
 def index():
     util.sessions.clear_ret_path(session)
     if util.accounts.is_logged_in(session):
         return render_template(
-            'index.html',  # For logged in users
+            'home.html',  # For logged in users
             logged_in=util.accounts.get_logged_in_user(session)
         )
     else:
         return render_template(
-            'index.html',  # For logged out users
+            'home.html',  # For logged out users
             logged_in=None
         )
+
+
+#for the wikipedia find the bald eagle in 5 redirects game
+@app.route('/wiki/<id>/<tries>')
+def wiki(id,tries):
+    if (int(id) < 0):#in case theres an id that shouldnt be there
+        return redirect('/wiki/10000/'+ tries)
+
+    else:
+        if (id == '4401'):#if you wind up at the id for bald eagle go back home
+            return redirect(url_for('home'))
+
+    Tries = int(tries) - 1
+    if (Tries == 0):#if you run out of tries you lose
+        return "You Lose"
+    wikipedia = "https://en.wikipedia.org/w/api.php"
+    query = str(wikipedia) + "?action=query&format=json&prop=info&pageids=" + str(id) + "&generator=links&gpllimit=max"
+    u = urllib.request.urlopen(query)#make a request for all the links on the page of this id
+    response = u.read()
+    data = json.loads(response)
+    data = data['query']['pages']
+
+    return render_template('wiki.html',
+                            dict = data,
+                            title = "Get to the bald Eagle",
+                            tries = str(Tries))
+
+@app.route('/StartWiki')
+def StartWiki():
+    #just so that it starts at a specified point
+    page = random.randint(10000,20000)
+    return redirect('/wiki/' + str(page) + '/10')
 
 
 @app.route('/login', methods=['GET', 'POST'])
