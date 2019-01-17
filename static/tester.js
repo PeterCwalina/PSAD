@@ -8,6 +8,7 @@ const END = "E"
 const BLOCK = "B"
 var facing = 'down'
 var is3 = true
+var begin = false
 
 var game = [
     [WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL],
@@ -226,7 +227,7 @@ function checkKey(e) {
     if (e.keyCode == '65') { // A key
         var wait = game[player_location[0]][player_location[1] - 1]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
         game[player_location[0]][player_location[1] - 1] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
@@ -243,7 +244,7 @@ function checkKey(e) {
     else if (e.keyCode == '68') { // D key
         var wait = game[player_location[0]][player_location[1] + 1]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
         game[player_location[0]][player_location[1] + 1] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         console.log("WOOOO")
@@ -261,7 +262,7 @@ function checkKey(e) {
     else if (e.keyCode == '87') { // W key
         var wait = game[player_location[0] - 1][player_location[1]]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
         game[player_location[0] - 1][player_location[1]] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
@@ -278,7 +279,7 @@ function checkKey(e) {
     else if (e.keyCode == '83') { // S key
         var wait = game[player_location[0] + 1][player_location[1]]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
         game[player_location[0] + 1][player_location[1]] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
@@ -295,6 +296,9 @@ function checkKey(e) {
 }
 var g = document.getElementById('g')
 g.addEventListener('click', function() {
+    but.hidden = false
+    begin = true
+    g.innerHTML = "Try another maze"
     // print()
     var breaks = document.getElementsByTagName('br')
     var col = document.getElementsByTagName('img')
@@ -311,6 +315,7 @@ g.addEventListener('click', function() {
 })
 
 document.addEventListener('keydown', function(e) {
+    if (!begin) { return }
     checkKey(e)
     console.log(`games: ${document.getElementsByTagName('img')}`)
     //window.location.reload()
