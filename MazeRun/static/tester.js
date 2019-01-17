@@ -5,6 +5,9 @@ const PATH = "-"
 const PLAYER = "P"
 const START = "S"
 const END = "E"
+const BLOCK = "B"
+var facing = 'down'
+var is3 = true
 
 var game = [
     [WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL],
@@ -62,7 +65,29 @@ var gen = function() {
     }
     return col
 }
-game = gen()
+
+var blockers = function block(num) {
+    if (isNaN(num)) { return false }
+    var count = 0
+    while (count < num) {
+        for (let i = 0; i < game.length; i++) {
+            let r = rand(100)
+            if (r <= 25) {
+                let index = game[i].findIndex(function(a) { return a == PATH })
+                if (index < 0) {
+
+                }else{
+                    game[i][index] = BLOCK
+                    console.log(`Changed game[${i}][${index}] to blocker: ${game[i][index]}`)
+                    count = count + 1
+                }
+            }
+        }
+    }
+    console.log(game)
+    return true
+}
+game = gen()  
 var print_maze = function prin() { // color: #6290C3
     var id = 'test'
     for (i = 0; i < game.length; i++) {
@@ -74,7 +99,7 @@ var print_maze = function prin() { // color: #6290C3
         child.id = `test${i}`
         id = child.id
     }
-}
+}  
 
 function p() {
     var id = 'test'
@@ -83,22 +108,35 @@ function p() {
         for (w = 0; w < game[0].length; w++) {
             child = og.appendChild(document.createElement('img'))
             if (game[i][w] == WALL) {
-                child.srcset = "static/pexels-photo-207142.jpg"
-                child.width = 49
-                child.height = 49
+                child.srcset = "static/images/pexels-photo-207142.jpg"
+                child.width = 48
+                child.height = 48
                 //console.log(`This is the source: ${child.src}`)
             }
             if (game[i][w] == PATH) {
-                child.srcset = "static/diamond_path.jpg"
-                child.width = 49
-                child.height = 49
+                child.srcset = "static/images/diamond_path.jpg"
+                child.width = 48
+                child.height = 48
             }
             if (game[i][w] == PLAYER) {
-                console.log("Got here")
-                child.srcset = "static/steve.jpg"
-                console.log(`Child has src of : ${child.src}`)
-                child.width = 49
-                child.height = 49
+                // console.log("Got here")
+                if (facing == 'up') {
+                    child.srcset = "static/images/steve_back.jpg"
+                }else if (facing == 'down') {
+                    child.srcset = "static/images/steve_front.jpg"
+                }else if (facing == 'left') {
+                    child.srcset = "static/images/steve_left.jpg"
+                }else{
+                    child.srcset = "static/images/steve_right.jpg"
+                }
+                // console.log(`Child has src of : ${child.src}`)
+                child.width = 48
+                child.height = 48
+            }
+            if (game[i][w] == BLOCK) {
+                child.srcset = "static/images/blocker.png"
+                child.width = 48
+                child.height = 48
             }
         }
         og = og.appendChild(document.createElement('br'))
@@ -107,7 +145,6 @@ function p() {
 }
 
 function print() { // shows the 3x3 area around the player
-    var id = 'test'
     var loc = []
     for (i = 0; i < game.length; i++) {
         a = game[i].findIndex(function(a) { return a == PLAYER })
@@ -117,31 +154,46 @@ function print() { // shows the 3x3 area around the player
             break;
         }
     }
+    var id = 'test'
     for (i = loc[0] - 1; i <= loc[0] + 1; i++) {
-        var og = document.getElementById(id)
+        let og = document.getElementById(id)
         for (w = loc[1] - 1; w <= loc[1] + 1; w++) {
-            console.log(`i: ${i} w: ${w}`)
-            var child = og.appendChild(document.createElement('img'))
-            console.log(`game[i][w]: ${game[i][w]}`)
+            child = og.appendChild(document.createElement('img'))
             if (game[i][w] == WALL) {
-                console.log("Got here")
-                child.srcset = "static/pexels-photo-207142.jpg"
+                child.srcset = "static/images/pexels-photo-207142.jpg"
+                child.width = 75
+                child.height = 75
+                //console.log(`This is the source: ${child.src}`)
+            }
+            if (game[i][w] == PATH) {
+                child.srcset = "static/images/diamond_path.jpg"
                 child.width = 75
                 child.height = 75
             }
             if (game[i][w] == PLAYER) {
-                child.srcset = "static/steve.jpg"
+                // console.log("Got here")
+                if (facing == 'up') {
+                    child.srcset = "static/images/steve_back.jpg"
+                }else if (facing == 'down') {
+                    child.srcset = "static/images/steve_front.jpg"
+                }else if (facing == 'left') {
+                    child.srcset = "static/images/steve_left.jpg"
+                }else{
+                    child.srcset = "static/images/steve_right.jpg"
+                }
+                // console.log(`Child has src of : ${child.src}`)
                 child.width = 75
                 child.height = 75
             }
-            if (game[i][w] == PATH) {
-                child.srcset = "static/diamond_path.jpg"
+            if (game[i][w] == BLOCK) {
+                child.srcset = "static/images/blocker.png"
                 child.width = 75
                 child.height = 75
             }
-            og = og.appendChild(document.createElement('br'))
         }
-    }
+        og = og.appendChild(document.createElement('br'))
+        }
+    return true
 }
 
 var random = function(n) {
@@ -158,6 +210,7 @@ for (i = 0; i < 5; i++) {
 function checkKey(e) {
     e = e || window.event
     player_location = []
+    console.log(e.keyCode)
     for (i = 0; i < game.length; i++) {
         a = game[i].findIndex(function(a) { return a == PLAYER })
         if (a != -1) {
@@ -170,11 +223,12 @@ function checkKey(e) {
         console.log("err with p location")
         return
     }
-    if (e.keyCode == '37') { // up arrow
+    if (e.keyCode == '65') { // A key
         var wait = game[player_location[0]][player_location[1] - 1]
         if (wait == WALL) { return }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
         game[player_location[0]][player_location[1] - 1] = PLAYER
-        game[player_location[0]][player_location[1]] = wait
+        game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
         var col = document.getElementsByTagName('img')
         for (i = col.length - 1; i >= 0; i--) {
@@ -183,14 +237,15 @@ function checkKey(e) {
         for (i = breaks.length - 1; i > -1; i--) {
             breaks[i].remove()
         }
-        p()
-        
+        facing = 'left'
+        if (is3) {print() }else{ p() }
     }
-    else if (e.keyCode == '39') { // down arrow
+    else if (e.keyCode == '68') { // D key
         var wait = game[player_location[0]][player_location[1] + 1]
         if (wait == WALL) { return }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
         game[player_location[0]][player_location[1] + 1] = PLAYER
-        game[player_location[0]][player_location[1]] = wait
+        game[player_location[0]][player_location[1]] = PATH
         console.log("WOOOO")
         var breaks = document.getElementsByTagName('br')
         var col = document.getElementsByTagName('img')
@@ -200,13 +255,15 @@ function checkKey(e) {
         for (i = breaks.length - 1; i > -1; i--) {
             breaks[i].remove()
         }
-        p()
+        facing = 'right'
+        if (is3) {print() }else{ p() }
     }
-    else if (e.keyCode == '38') { // left arrow
+    else if (e.keyCode == '87') { // W key
         var wait = game[player_location[0] - 1][player_location[1]]
         if (wait == WALL) { return }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
         game[player_location[0] - 1][player_location[1]] = PLAYER
-        game[player_location[0]][player_location[1]] = wait
+        game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
         var col = document.getElementsByTagName('img')
         for (i = col.length - 1; i >= 0; i--) {
@@ -215,13 +272,15 @@ function checkKey(e) {
         for (i = breaks.length - 1; i > -1; i--) {
             breaks[i].remove()
         }
-        p()
+        facing = 'up'
+        if (is3) {print() }else{ p() }
     }
-    else if (e.keyCode == '40') { // right arrow
+    else if (e.keyCode == '83') { // S key
         var wait = game[player_location[0] + 1][player_location[1]]
         if (wait == WALL) { return }
+        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/" }
         game[player_location[0] + 1][player_location[1]] = PLAYER
-        game[player_location[0]][player_location[1]] = wait
+        game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
         var col = document.getElementsByTagName('img')
         for (i = col.length - 1; i >= 0; i--) {
@@ -230,7 +289,8 @@ function checkKey(e) {
         for (i = breaks.length - 1; i > -1; i--) {
             breaks[i].remove()
         }
-        p()
+        facing = 'down'
+        if (is3) {print() }else{ p() }
     }
 }
 var g = document.getElementById('g')
@@ -245,7 +305,8 @@ g.addEventListener('click', function() {
         breaks[i].remove()
     }
     game = gen()
-    p()
+    blockers(5)
+    if (is3) {print() }else{ p() }
     //g.disabled = true
 })
 
@@ -253,4 +314,21 @@ document.addEventListener('keydown', function(e) {
     checkKey(e)
     console.log(`games: ${document.getElementsByTagName('img')}`)
     //window.location.reload()
+})
+
+but.addEventListener('click', function() {
+    is3 = !is3
+    var breaks = document.getElementsByTagName('br')
+    var col = document.getElementsByTagName('img')
+    for (i = col.length - 1; i >= 0; i--) {
+        col[i].remove()
+    }
+    for (i = breaks.length - 1; i > -1; i--) {
+        breaks[i].remove()
+    }
+    if (is3) {
+        print()
+    }else{
+        p()
+    }
 })
