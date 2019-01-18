@@ -3,15 +3,26 @@
 Home
 {% endblock %}
 {% block content %}
+
+<style>
+  h3{
+    text-align: center;
+    font-size: 10vw;
+    font-weight: bold;
+  }
+  #but{
+    text-align: center;
+  }
+
+</style>
+
 <body>
-    <h1>Pick a game from here</h1>
-    <p>
+    <h3> &nbsp WikiMaze! </h3>
       <ul>
-      <a href= "{{ url_for('none') }}" class="btn btn-outline-dark" role = "button">Maze Game</a>
-
-
+        <div id= "but" style= "align:center; ">
+      &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp<a href= "{{ url_for('none') }}" class="btn btn-dark btn-lg" role = "button">Maze Game</a>
       <!-- <a style = "color: #00008B; font-weight: 300;" href="{{ url_for('StartWiki') }}">Find the Bald Eagle in Wikipedia</a> -->
+      </div>
       </ul>
-    </p>
 </body>
 {% endblock %}

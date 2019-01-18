@@ -3,21 +3,25 @@
 Find the Bald eagle
 {% endblock %}
 {% block content %}
-<body style="text-align:center">
+<body style= "background-image:linear-gradient(#b5fffc, #b5fffc);">
+<!-- style="text-align:center, background-image: linear-gradient(#1f83a8, #b5fffc); height:100%; width:100%; margin:0; -->
+<!-- "> -->
     <h1>Find the Bald Eagle</h1>
     <h2>Redirects Remaining:{{tries}}</h2>
     {% set msgs = get_flashed_messages() %}
     {% for each in msgs %}
     <p class="error">{{each}}</p>
     {% endfor %}
-    <div class='row'>
+    <div class='row' style ="background-color:transparent">
+
       {% for key in dict %}
-      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="padding:10px;">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="background-color:transparent">
+      
         <li>
           <a href="/wiki/{{key}}/{{tries}}">{{dict[key]['title']}}</a>
-        </li>
-      </div>
-      {% endfor %}
-    </div>
+         </li>
+     </div>
+        {% endfor %}
+     </div>
 </body>
 {% endblock %}

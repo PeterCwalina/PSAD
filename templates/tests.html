@@ -1,10 +1,17 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Page Title</title>
     <link rel="stylesheet" type="text/css" href="static/styles.css"/>
-</head>
+</head> -->
+
+{% extends "base.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
 <body>
+  <div id= "maz">
     <p id="test"></p>
     <button id="but" hidden=true>Button</button>
     <!-- <button id="other">Other Button</button> -->
@@ -12,5 +19,19 @@
     <img id="test">
     <script src="static/maze.js"></script>
     <script src="static/tester.js"></script>
+  </div>
 </body>
-</html>
+<!-- </html> -->
+
+<style>
+#maz{
+  padding: 40px;
+  text-align: center;
+}
+body{
+  margin: 0;
+  width: 100%;
+}
+</style>
+
+{% endblock %}
