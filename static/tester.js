@@ -240,6 +240,7 @@ function checkKey(e) {
         var wait = game[player_location[0]][player_location[1] - 1]
         if (wait == WALL) { return }
         if (wait == BLOCK) { 
+            game[player_location[0]][player_location[1] - 1] = PATH
             sessionStorage.setItem('game', JSON.stringify(game))
             window.location.href = "/StartWiki" 
         }
@@ -260,6 +261,7 @@ function checkKey(e) {
         var wait = game[player_location[0]][player_location[1] + 1]
         if (wait == WALL) { return }
         if (wait == BLOCK) { 
+            game[player_location[0]][player_location[1] + 1] = PATH
             sessionStorage.setItem('game', JSON.stringify(game))
             window.location.href = "/StartWiki" 
         }
@@ -281,6 +283,7 @@ function checkKey(e) {
         var wait = game[player_location[0] - 1][player_location[1]]
         if (wait == WALL) { return }
         if (wait == BLOCK) { 
+            game[player_location[0] - 1][player_location[1]] = PATH
             sessionStorage.setItem('game', JSON.stringify(game))
             window.location.href = "/StartWiki" 
         }
@@ -301,6 +304,7 @@ function checkKey(e) {
         var wait = game[player_location[0] + 1][player_location[1]]
         if (wait == WALL) { return }
         if (wait == BLOCK) {
+            game[player_location[0] + 1][player_location[1]] = PATH
             sessionStorage.setItem('game', JSON.stringify(game))
             window.location.href = "/StartWiki" 
         }
