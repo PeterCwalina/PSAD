@@ -25,19 +25,43 @@ let m = gen_maze();
 var playerX = m.start[0];
 var playerY = m.start[1];
 
+// Create wiki blockers
+var genBlockers = () => {
+    var b = new Set();
+    for (var i = 0; i < 5; i++) {
+        let x = choice(m.maze)
+        if (m.start[0] === x[0] && m.start[1] === x[1] ||
+            m.end[0] === x[0] && m.end[1] === x[1]) {
+            continue;
+        }
+        b.add(x);
+    }
+    return b;
+};
+
+// Blockers
+var blockers = genBlockers();
+
 // Draws the maze to the canvas
 var drawMaze = () => {
-    var result = "";
     // Clear canvas
     ctx.clearRect(0, 0, width, height);
-    // Set canvas color to black
-    ctx.fillStyle = 'black';
     // Draw walls and path
     for (var y = 0; y < MAX_Y; y++) {
         for (var x = 0; x < MAX_X; x++) {
+            if (contains(blockers, [x, y])) {
+                // Set canvas color to black
+                ctx.fillStyle = 'blue';
+                // Draw wall
+                ctx.fillRect(
+                    x * rect_width, y * rect_height, rect_width, rect_height,
+                );
+            }
             if (contains(m.maze, [x, y])) {
                 // Draw path
             } else {
+                // Set canvas color to black
+                ctx.fillStyle = 'black';
                 // Draw wall
                 ctx.fillRect(
                     x * rect_width, y * rect_height, rect_width, rect_height,
@@ -67,6 +91,7 @@ var drawPlayer = () => {
 // Initial drawing of player
 drawPlayer();
 
+// Draw mask (modified StackOverflow code)
 var drawMask = (x, y, r) => {
     // Create a canvas that we will use as a mask
     var maskCanvas = document.createElement('canvas');
@@ -94,7 +119,7 @@ var drawMask = (x, y, r) => {
 var drawFog = () => drawMask(
     playerX * rect_width + rect_width / 2,
     playerY * rect_height + rect_height / 2,
-    100
+    100,
 );
 
 // Draw initial fog
@@ -106,6 +131,12 @@ var move = (x, y) => {
     if (playerX+x === m.end[0] && playerY+y === m.end[1]) {
         // Send the player to /win
         location.href = '/win';
+    }
+    // Check if blocking move
+    if (contains(blockers, [playerX+x, playerY+y])) {
+        // Send the player to /StartWiki
+        location.href = '/StartWiki';
+        blockers.delete([playerX+x, playerY+y]);
     }
     // Check if legal move
     if (contains(m.maze, [playerX+x, playerY+y])) {
@@ -121,10 +152,8 @@ var move = (x, y) => {
         playerY += y;
         // Clear canvas
         ctx.clearRect(0, 0, width, height);
-        // console.log('before drawMaze');
         // Redraw maze
         drawMaze();
-        // console.log('after drawMaze');
         // Redraw player
         drawPlayer();
         // Redraw fog
