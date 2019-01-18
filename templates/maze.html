@@ -10,7 +10,32 @@
   <body>
     <canvas id="maze" width="700" height="700"></canvas>
     <script src="static/maze.js"></script>
+    <script type="text/javascript">
+      // Declare variables to be overwritten by either a save or canvas.js
+      // Maze object
+      var m;
+      // Player x and y
+      var playerX, playerY;
+      // Wiki blockers
+      var blockers;
+    </script>
     <script src="static/canvas.js"></script>
+    {% if saved %}
+      <script type="text/javascript">
+	m = {
+	  maze: new Set({{ maze }}),
+	  start: {{ start }},
+	  end: {{ end }},
+	};
+	playerX = {{ x }};
+	playerY = {{ y }};
+	blockers = new Set({{ blockers }});
+      </script>
+    {% endif %}
+    <script type="text/javascript">
+      begin();
+      drawAll();
+    </script>
   </body>
 </html>
 

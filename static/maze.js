@@ -15,6 +15,16 @@ var contains = (s, e) => {
     return false;
 };
 
+var remove = (s, e) => {
+    var l = [];
+    for (var i of s) {
+        if (e[0] != i[0] || e[1] != i[1]) {
+            l.push(i);
+        }
+    }
+    return new Set(l);
+}
+
 const MAX_X = 25;
 const MAX_Y = 25;
 
