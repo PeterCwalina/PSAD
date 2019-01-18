@@ -15,12 +15,15 @@ let height = canvas.height;
 let rect_width = width / MAX_X;
 let rect_height = height / MAX_Y;
 
-// Declare playerX and playerY
-var playerX;
-var playerY;
-
 // Create a maze
 let m = gen_maze();
+
+// Set playerX and playerY to start
+// [playerX, playerY] = m.start;
+
+// Declare playerX and playerY
+var playerX = m.start[0];
+var playerY = m.start[1];
 
 // Draws the maze to the canvas
 var drawMaze = () => {
@@ -48,12 +51,10 @@ var drawMaze = () => {
     ctx.fillRect(
         endX * rect_width, endY * rect_height, rect_width, rect_height,
     );
-    // Set playerX and playerY to start
-    [playerX, playerY] = m.start;
 };
 
 // Call drawMaze;
-drawMaze(m);
+drawMaze();
 
 // Draws the player on the canvas
 var drawPlayer = () => {
@@ -65,6 +66,39 @@ var drawPlayer = () => {
 
 // Initial drawing of player
 drawPlayer();
+
+var drawMask = (x, y, r) => {
+    // Create a canvas that we will use as a mask
+    var maskCanvas = document.createElement('canvas');
+
+    // Ensure same dimensions
+    maskCanvas.width = width;
+    maskCanvas.height = height;
+    var maskCtx = maskCanvas.getContext('2d');
+
+    // This color is the one of the filled shape
+    maskCtx.fillStyle = 'grey';
+    // Fill the mask
+    maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
+    // Set xor operation
+    maskCtx.globalCompositeOperation = 'xor';
+    // Draw the shape you want to take out
+    maskCtx.arc(x, y, r, 0, 2 * Math.PI);
+    maskCtx.fill();
+
+    // Draw mask on the image, and done
+    ctx.drawImage(maskCanvas, 0, 0);
+};
+
+// Draw fog around player
+var drawFog = () => drawMask(
+    playerX * rect_width + rect_width / 2,
+    playerY * rect_height + rect_height / 2,
+    100
+);
+
+// Draw initial fog
+drawFog();
 
 // Moves and redraws the player
 var move = (x, y) => {
@@ -85,8 +119,16 @@ var move = (x, y) => {
         // Move player
         playerX += x;
         playerY += y;
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        // console.log('before drawMaze');
+        // Redraw maze
+        drawMaze();
+        // console.log('after drawMaze');
         // Redraw player
         drawPlayer();
+        // Redraw fog
+        drawFog();
     }
 };
 
