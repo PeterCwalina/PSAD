@@ -47,3 +47,6 @@ $ . tm/bin/activate
 ```
 
 6. Navigate to `localhost:5000` on your web browser
+
+# Video 
+https://youtu.be/EpmsDPmtf-E
