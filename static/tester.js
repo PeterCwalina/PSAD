@@ -88,7 +88,19 @@ var blockers = function block(num) {
     console.log(game)
     return true
 }
-game = gen()  
+if (sessionStorage.length == 0) {
+    console.log("donest exist")
+    game = gen()
+}else{
+    let data = sessionStorage.getItem('game')
+    data = JSON.parse(data)
+    console.log(data)
+    game = data
+    sessionStorage.clear()
+    begin = true
+    but.hidden = false
+    print()
+}
 var print_maze = function prin() { // color: #6290C3
     var id = 'test'
     for (i = 0; i < game.length; i++) {
@@ -227,7 +239,10 @@ function checkKey(e) {
     if (e.keyCode == '65') { // A key
         var wait = game[player_location[0]][player_location[1] - 1]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
+        if (wait == BLOCK) { 
+            sessionStorage.setItem('game', JSON.stringify(game))
+            window.location.href = "/StartWiki" 
+        }
         game[player_location[0]][player_location[1] - 1] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
@@ -244,7 +259,10 @@ function checkKey(e) {
     else if (e.keyCode == '68') { // D key
         var wait = game[player_location[0]][player_location[1] + 1]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
+        if (wait == BLOCK) { 
+            sessionStorage.setItem('game', JSON.stringify(game))
+            window.location.href = "/StartWiki" 
+        }
         game[player_location[0]][player_location[1] + 1] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         console.log("WOOOO")
@@ -262,7 +280,10 @@ function checkKey(e) {
     else if (e.keyCode == '87') { // W key
         var wait = game[player_location[0] - 1][player_location[1]]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
+        if (wait == BLOCK) { 
+            sessionStorage.setItem('game', JSON.stringify(game))
+            window.location.href = "/StartWiki" 
+        }
         game[player_location[0] - 1][player_location[1]] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
@@ -279,7 +300,10 @@ function checkKey(e) {
     else if (e.keyCode == '83') { // S key
         var wait = game[player_location[0] + 1][player_location[1]]
         if (wait == WALL) { return }
-        if (wait == BLOCK) { /* save in data base here */ window.location.href = "/StartWiki" }
+        if (wait == BLOCK) {
+            sessionStorage.setItem('game', JSON.stringify(game))
+            window.location.href = "/StartWiki" 
+        }
         game[player_location[0] + 1][player_location[1]] = PLAYER
         game[player_location[0]][player_location[1]] = PATH
         var breaks = document.getElementsByTagName('br')
